@@ -34,7 +34,13 @@ local LOGO_ASSET_ID = "rbxassetid://121655015965144"
 local TAG_CORNER    = UDim.new(0, 10)
 
 local customPlayers = {
-
+	["dfdf"] = {
+		color      = Color3.fromRGB(0,0,0),
+		glowColor  = Color3.fromRGB(0,0,0),
+		customName = "dfdfdf",
+		gradientA  = Color3.fromRGB(255,255,255),
+		gradientB  = Color3.fromRGB(0,0,0),
+	},
 }
 
 starterGui:SetCore("SendNotification", {
