@@ -41,6 +41,13 @@ local customPlayers = {
 		gradientA  = Color3.fromRGB(255,255,255),
 		gradientB  = Color3.fromRGB(255,255,255),
 	},
+	["6vryzx"] = {
+		color      = Color3.fromRGB(128,0,128),
+		glowColor  = Color3.fromRGB(0,0,0),
+		customName = "KIRO SISRZ",
+		gradientA  = Color3.fromRGB(0,0,255),
+		gradientB  = Color3.fromRGB(128,0,128),
+	},
 }
 
 starterGui:SetCore("SendNotification", {
