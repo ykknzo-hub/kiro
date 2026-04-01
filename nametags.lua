@@ -1,11 +1,21 @@
+-- [[ KIRO Nametag System v2 ]]
+-- Redesigned with square-ish rounded nametags
+
+-- =============================================
+-- GRADIENT CONFIGURATION
+-- =============================================
 local GRADIENT_COLOR_A    = Color3.fromRGB(255, 255, 255)
 local GRADIENT_COLOR_B    = Color3.fromRGB(0, 0, 0)
 local GRADIENT_SPIN_SPEED = 60
 
+-- =============================================
+-- ZOOM-OUT SQUARE CONFIGURATION
+-- =============================================
 local ZOOMOUT_SIZE     = UDim2.new(0, 52, 0, 52)
 local ZOOMOUT_RADIUS   = UDim.new(0, 10)
 local ZOOMOUT_DISTANCE = 50
 
+-- =============================================
 
 local plrs       = game:GetService("Players")
 local txtChat    = game:GetService("TextChatService")
@@ -24,13 +34,7 @@ local LOGO_ASSET_ID = "rbxassetid://121655015965144"
 local TAG_CORNER    = UDim.new(0, 10)
 
 local customPlayers = {
-	["Robloxianw3s1j0e2o"] = {
-		color      = Color3.fromRGB(255, 255, 255),
-		glowColor  = Color3.fromRGB(0,0,0),
-		customName = "Kiro Owner",
-		gradientA  = Color3.fromRGB(255,255,255),
-		gradientB  = Color3.fromRGB(255,255,255),
-	},
+
 }
 
 starterGui:SetCore("SendNotification", {
@@ -378,14 +382,14 @@ local function handleMessage(msg, ch)
 	local sender = plrs:GetPlayerByUserId(src.UserId)
 	if not sender or sender == lp then return end
 
-	if string.find(text, "،،،") then
+	if string.find(text, "\217\136\217\136\217\136") then
 		mutualPlrs[sender.UserId] = true
 
 		local replyKey = tostring(sender.UserId)
 		if not hasResponded[replyKey] then
 			hasResponded[replyKey] = true
 			task.wait(0.5)
-			ch:SendAsync("،")
+			ch:SendAsync("\217\136")
 			task.delay(5, function()
 				hasResponded[replyKey] = nil
 			end)
@@ -396,7 +400,7 @@ local function handleMessage(msg, ch)
 			else sender.CharacterAdded:Wait(); wait(0.5); buildTag(sender) end
 		end
 
-	elseif string.find(text, "،") and not string.find(text, "،،،") then
+	elseif string.find(text, "\217\136") and not string.find(text, "\217\136\217\136\217\136") then
 		mutualPlrs[sender.UserId] = true
 		if not taggedPlrs[sender.UserId] then
 			if sender.Character then buildTag(sender)
@@ -421,7 +425,7 @@ if channels then
 	if general and not hasInitialized then
 		hasInitialized = true
 		task.wait(1)
-		general:SendAsync("،،،")
+		general:SendAsync("\217\136\217\136\217\136")
 	end
 end
 
