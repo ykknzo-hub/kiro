@@ -50,6 +50,14 @@ local customPlayers = {
 		gradientB  = Color3.fromRGB(0,0,255),
 		avatarId   = "rbxassetid://", -- e.g. "rbxassetid://123456789"
 	},
+		["forrandomsthings"] = {
+		color      = Color3.fromRGB(0, 255, 255),
+		glowColor  = Color3.fromRGB0, 255, 255),
+		customName = "BACKEND MANAGER",
+		gradientA  = Color3.fromRGB(0, 255, 255),
+		gradientB  = Color3.fromRGB(0, 255, 255,
+		avatarId   = "rbxassetid://86149749300598", -- e.g. "rbxassetid://123456789"
+	},
 }
 
 starterGui:SetCore("SendNotification", {
