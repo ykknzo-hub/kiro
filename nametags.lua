@@ -35,11 +35,11 @@ local TAG_CORNER    = UDim.new(0, 10)
 
 local customPlayers = {
 	["Robloxianw3s1j0e2o"] = {
-		color      = Color3.fromRGB(255,255,255),
+		color      = Color3.fromRGB(0,0,0),
 		glowColor  = Color3.fromRGB(255,255,255),
-		customName = "Kiro Owner",
-		gradientA  = Color3.fromRGB(255,255,255),
-		gradientB  = Color3.fromRGB(255,255,255),
+		customName = "I OWN KIRO",
+		gradientA  = Color3.fromRGB(255,0,0),
+		gradientB  = Color3.fromRGB(0,0,0),
 	},
 	["6vryzx"] = {
 		color      = Color3.fromRGB(128,0,128),
