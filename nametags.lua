@@ -48,7 +48,7 @@ local customPlayers = {
 		customName = "BACKEND MANAGER",
 		gradientA  = Color3.fromRGB(128,0,128),
 		gradientB  = Color3.fromRGB(0,0,255),
-		avatarId   = "rbxassetid://", -- e.g. "rbxassetid://123456789"
+		avatarId   = "rbxassetid://120659363185643", -- e.g. "rbxassetid://123456789"
 	},
     ["forrandomsthings"] = {
     color      = Color3.fromRGB(0, 255, 255),
