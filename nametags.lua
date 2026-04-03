@@ -40,7 +40,7 @@ local customPlayers = {
 		customName = "I OWN KIRO",
 		gradientA  = Color3.fromRGB(255,0,0),
 		gradientB  = Color3.fromRGB(0,0,0),
-		avatarId   = nil, -- e.g. "rbxassetid://123456789"
+		avatarId   = "rbxassetid://", -- e.g. "rbxassetid://123456789"
 	},
 	["6vryzx"] = {
 		color      = Color3.fromRGB(128,0,128),
@@ -48,7 +48,7 @@ local customPlayers = {
 		customName = "BACKEND MANAGER",
 		gradientA  = Color3.fromRGB(128,0,128),
 		gradientB  = Color3.fromRGB(0,0,255),
-		avatarId   = rbxassetid://86149749300598, -- e.g. "rbxassetid://123456789"
+		avatarId   = "rbxassetid://", -- e.g. "rbxassetid://123456789"
 	},
 }
 
