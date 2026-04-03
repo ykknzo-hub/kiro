@@ -19,7 +19,8 @@ local COMMANDS = {
     ["Trip"] = "loadstring(game:HttpGet(\"https://pastefy.app/RLsMEOcd/raw\"))()",
     ["Shaders"] = "loadstring(game:HttpGet('https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua'))()",
     ["Headsit + FuckMode"] = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/ykknzo-hub/kiro/main/headsit.lua\"))()",
-    ["Shift Lock"] = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/ykknzo-hub/kiro/main/shiftlock.lua\"))()"
+    ["Shift Lock"] = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/ykknzo-hub/kiro/main/shiftlock.lua\"))()",
+    ["Test"] = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/ykknzo-hub/kiro/main/shiftlock.lua\"))()"
 }
 
 local CHAT_COMMANDS = {
