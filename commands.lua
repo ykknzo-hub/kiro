@@ -1,0 +1,52 @@
+local COMMANDS = {
+    ["Baseplate Expander"] = "loadstring(game:HttpGet(\"https://pastefy.app/DKkbtWIB/raw?part=baseplate%20expander.txt\"))()",
+    ["Superman Fly"] = "loadstring(game:HttpGet(\"https://pastefy.app/x7IYPISZ/raw?part=\"))()",
+    ["Touch Fling"] = "loadstring(game:HttpGet(\"https://pastefy.app/sJkrIed9/raw?part=touch%20fling.txt\"))()",
+    ["Invisible"] = "loadstring(game:HttpGet(\"https://pastefy.app/LThOT2t4/raw?part=invisible.txt\"))()",
+    ["Emote Wheel"] = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/7yd7/Hub/refs/heads/Branch/GUIS/Emotes.lua\"))()",
+    ["Rewind"] = "loadstring(game:HttpGet(\"https://pastebin.com/raw/e3pb2daR\"))()",
+    ["Jerk Off Panel"] = "loadstring(game:HttpGet(\"https://pastebin.com/raw/6eCCVteY\"))()",
+    ["Position Saver"] = "loadstring(game:HttpGet(\"https://pastebin.com/raw/1e4F9kuf\"))()",
+    ["TP Panel"] = "loadstring(game:HttpGet(\"https://pastebin.com/raw/anjkQ7Z2\"))()",
+    ["NoClip"] = "loadstring(game:HttpGet(\"https://pastebin.com/raw/iB82UBm8\"))()",
+    ["UGC Animations"] = "loadstring(game:HttpGet(\"https://pastebin.com/raw/BRMqxVAP\"))()",
+    ["Sliders"] = "loadstring(game:HttpGet(\"https://pastebin.com/raw/9rTDwvNZ\"))()",
+    ["Server Hopper"] = "loadstring(game:HttpGet(\"https://pastebin.com/raw/fhbewyuv\"))()",
+    ["Rejoin"] = "loadstring(game:HttpGet(\"https://pastebin.com/raw/BDPH5PkM\"))()",
+    ["Infinite Yield"] = "loadstring(game:HttpGet(\"https://pastefy.app/cd1Ezbml/raw\"))()",
+    ["FaceBang"] = "loadstring(game:HttpGet(\"https://pastefy.app/EGdK3Xer/raw\"))()",
+    ["AimLock"] = "loadstring(game:HttpGet(\"https://pastefy.app/9uU5CORU/raw\"))()",
+    ["Trip"] = "loadstring(game:HttpGet(\"https://pastefy.app/RLsMEOcd/raw\"))()",
+    ["Shaders"] = "loadstring(game:HttpGet('https://raw.githubusercontent.com/randomstring0/pshade-ultimate/refs/heads/main/src/cd.lua'))()",
+    ["Headsit + FuckMode"] = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/ykknzo-hub/kiro/main/headsit.lua\"))()",
+    ["Shift Lock"] = "loadstring(game:HttpGet(\"https://raw.githubusercontent.com/ykknzo-hub/kiro/main/shiftlock.lua\"))()"
+}
+
+local CHAT_COMMANDS = {
+    ["fling"] = COMMANDS["Touch Fling"],
+    ["fly"] = COMMANDS["Superman Fly"],
+    ["invis"] = COMMANDS["Invisible"],
+    ["bang"] = COMMANDS["FaceBang"],
+    ["uanim"] = COMMANDS["UGC Animations"],
+    ["hf"] = COMMANDS["Headsit + FuckMode"],
+    ["base"] = COMMANDS["Baseplate Expander"],
+    ["je"] = COMMANDS["Jerk Off Panel"],
+    ["emote"] = COMMANDS["Emote Wheel"],
+    ["rewind"] = COMMANDS["Rewind"],
+    ["noclip"] = COMMANDS["NoClip"],
+    ["sliders"] = COMMANDS["Sliders"],
+    ["hop"] = COMMANDS["Server Hopper"],
+    ["rejoin"] = COMMANDS["Rejoin"],
+    ["iy"] = COMMANDS["Infinite Yield"],
+    ["aimlock"] = COMMANDS["AimLock"],
+    ["trip"] = COMMANDS["Trip"],
+    ["shaders"] = COMMANDS["Shaders"],
+    ["shiftlock"] = COMMANDS["Shift Lock"],
+    ["tp"] = COMMANDS["TP Panel"],
+    ["possaver"] = COMMANDS["Position Saver"],
+}
+
+return {
+    Commands = COMMANDS,
+    ChatCommands = CHAT_COMMANDS
+}
