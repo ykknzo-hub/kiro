@@ -35,29 +35,19 @@ local TAG_CORNER    = UDim.new(0, 10)
 
 local customPlayers = {
 	["Robloxianw3s1j0e2o"] = {
-		color      = Color3.fromRGB(255,0,0),
-		glowColor  = Color3.fromRGB(255,0,0),
-		customName = "I OWN KIRO",
-		gradientA  = Color3.fromRGB(255,0,0),
-		gradientB  = Color3.fromRGB(0,0,0),
-		avatarId   = "rbxassetid://106417171564232", -- e.g. "rbxassetid://123456789"
+		color      = Color3.fromRGB(255,255,255),
+		glowColor  = Color3.fromRGB(255,255,255),
+		customName = "Kiro Owner",
+		gradientA  = Color3.fromRGB(255,255,255),
+		gradientB  = Color3.fromRGB(255,255,255),
 	},
 	["6vryzx"] = {
 		color      = Color3.fromRGB(128,0,128),
 		glowColor  = Color3.fromRGB(0,0,0),
-		customName = "BACKEND MANAGER",
-		gradientA  = Color3.fromRGB(128,0,128),
-		gradientB  = Color3.fromRGB(0,0,255),
-		avatarId   = "rbxassetid://120659363185643", -- e.g. "rbxassetid://123456789"
+		customName = "KIRO CO-OWNER",
+		gradientA  = Color3.fromRGB(0,0,255),
+		gradientB  = Color3.fromRGB(128,0,128),
 	},
-["forrandomsthings"] = {
-    color      = Color3.fromRGB(0, 255, 255),
-    glowColor  = Color3.fromRGB(0, 255, 255),
-    customName = "BACKEND MANAGER",
-    gradientA  = Color3.fromRGB(0, 255, 255),
-    gradientB  = Color3.fromRGB(0, 255, 255),
-    avatarId   = "rbxassetid://86149749300598",
-    },  
 }
 
 starterGui:SetCore("SendNotification", {
@@ -110,7 +100,6 @@ local function buildTag(plr)
 	local isOwner     = (displayName == "Kiro Owner")
 	local gradA       = (customData and customData.gradientA) or GRADIENT_COLOR_A
 	local gradB       = (customData and customData.gradientB) or GRADIENT_COLOR_B
-	local logoId      = (customData and customData.avatarId) or LOGO_ASSET_ID
 
 	local bb = Instance.new("BillboardGui")
 	bb.Name        = "KiroTag_" .. plr.UserId
@@ -219,7 +208,7 @@ local function buildTag(plr)
 	logoImg.Parent               = logoHolder
 	logoImg.Size                 = UDim2.new(1, 0, 1, 0)
 	logoImg.BackgroundTransparency = 1
-	logoImg.Image                = logoId
+	logoImg.Image                = LOGO_ASSET_ID
 	logoImg.ScaleType            = Enum.ScaleType.Fit
 	logoImg.ZIndex               = 5
 
