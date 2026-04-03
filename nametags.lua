@@ -40,6 +40,7 @@ local customPlayers = {
 		customName = "I OWN KIRO",
 		gradientA  = Color3.fromRGB(255,0,0),
 		gradientB  = Color3.fromRGB(0,0,0),
+		avatarId   = nil, -- e.g. "rbxassetid://123456789"
 	},
 	["6vryzx"] = {
 		color      = Color3.fromRGB(128,0,128),
@@ -47,6 +48,7 @@ local customPlayers = {
 		customName = "BACKEND MANAGER",
 		gradientA  = Color3.fromRGB(128,0,128),
 		gradientB  = Color3.fromRGB(0,0,255),
+		avatarId   = nil, -- e.g. "rbxassetid://123456789"
 	},
 }
 
@@ -100,6 +102,7 @@ local function buildTag(plr)
 	local isOwner     = (displayName == "Kiro Owner")
 	local gradA       = (customData and customData.gradientA) or GRADIENT_COLOR_A
 	local gradB       = (customData and customData.gradientB) or GRADIENT_COLOR_B
+	local logoId      = (customData and customData.avatarId) or LOGO_ASSET_ID
 
 	local bb = Instance.new("BillboardGui")
 	bb.Name        = "KiroTag_" .. plr.UserId
@@ -208,7 +211,7 @@ local function buildTag(plr)
 	logoImg.Parent               = logoHolder
 	logoImg.Size                 = UDim2.new(1, 0, 1, 0)
 	logoImg.BackgroundTransparency = 1
-	logoImg.Image                = LOGO_ASSET_ID
+	logoImg.Image                = logoId
 	logoImg.ScaleType            = Enum.ScaleType.Fit
 	logoImg.ZIndex               = 5
 
