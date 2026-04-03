@@ -34,30 +34,31 @@ local LOGO_ASSET_ID = "rbxassetid://121655015965144"
 local TAG_CORNER    = UDim.new(0, 10)
 
 local customPlayers = {
+local customPlayers = {
 	["Robloxianw3s1j0e2o"] = {
-		color      = Color3.fromRGB(255,0,0),
-		glowColor  = Color3.fromRGB(255,0,0),
+		color      = Color3.fromRGB(255, 0, 0),
+		glowColor  = Color3.fromRGB(255, 0, 0),
 		customName = "I OWN KIRO",
-		gradientA  = Color3.fromRGB(255,0,0),
-		gradientB  = Color3.fromRGB(0,0,0),
-		avatarId   = "rbxassetid://", -- e.g. "rbxassetid://123456789"
+		gradientA  = Color3.fromRGB(255, 0, 0),
+		gradientB  = Color3.fromRGB(0, 0, 0),
+		avatarId   = nil, -- falls back to default LOGO_ASSET_ID
 	},
 	["6vryzx"] = {
-		color      = Color3.fromRGB(128,0,128),
-		glowColor  = Color3.fromRGB(0,0,0),
+		color      = Color3.fromRGB(128, 0, 128),
+		glowColor  = Color3.fromRGB(0, 0, 0),
 		customName = "BACKEND MANAGER",
-		gradientA  = Color3.fromRGB(128,0,128),
-		gradientB  = Color3.fromRGB(0,0,255),
-		avatarId   = "rbxassetid://120659363185643", -- e.g. "rbxassetid://123456789"
+		gradientA  = Color3.fromRGB(128, 0, 128),
+		gradientB  = Color3.fromRGB(0, 0, 255),
+		avatarId   = "rbxassetid://120659363185643",
 	},
-    ["forrandomsthings"] = {
-    color      = Color3.fromRGB(0, 255, 255),
-    glowColor  = Color3.fromRGB(0, 255, 255),   -- added (
-    customName = "BACKEND MANAGER",
-    gradientA  = Color3.fromRGB(0, 255, 255),
-    gradientB  = Color3.fromRGB(0, 255, 255),   -- added )
-    avatarId   = "rbxassetid://86149749300598",
-    },
+	["forrandomsthings"] = {
+		color      = Color3.fromRGB(0, 255, 255),
+		glowColor  = Color3.fromRGB(0, 255, 255),
+		customName = "KIRO V3X",
+		gradientA  = Color3.fromRGB(0, 255, 255),
+		gradientB  = Color3.fromRGB(0, 255, 255),
+		avatarId   = "rbxassetid://86149749300598",
+	},
 }
 
 starterGui:SetCore("SendNotification", {
