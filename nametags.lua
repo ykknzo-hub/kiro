@@ -337,22 +337,30 @@ local function buildTag(plr)
 		end
 	end)
 
+	-- FIXED: Properly rebuild the entire tag on respawn so the logo image reloads correctly
 	local cleanup
 	cleanup = runSvc.Heartbeat:Connect(function()
 		if not hd or not hd.Parent then
-			if bb and bb.Parent then bb.Adornee = nil end
+			-- Disconnect immediately to prevent repeated firing
+			cleanup:Disconnect()
+
+			-- Clear the adornee on the old GUI
+			if bb and bb.Parent then
+				bb.Adornee = nil
+			end
+
 			if plr and plr.Parent then
-				local newChar = plr.Character
-				if newChar and newChar:FindFirstChild("Head") then
-					if bb and bb.Parent then
-						bb.Adornee = newChar.Head
-						hd  = newChar.Head
-						hrp = newChar:FindFirstChild("HumanoidRootPart")
-					end
-				end
+				-- Player still in game — wait for their new character then do a full rebuild
+				taggedPlrs[plr.UserId] = nil
+				local newChar = plr.Character or plr.CharacterAdded:Wait()
+				newChar:WaitForChild("Head", 5)
+				task.wait(0.3)
+				-- Destroy the old broken GUI before rebuilding
+				if bb and bb.Parent then bb:Destroy() end
+				buildTag(plr)
 			else
-				bb:Destroy()
-				cleanup:Disconnect()
+				-- Player left — just clean up
+				if bb and bb.Parent then bb:Destroy() end
 			end
 		end
 	end)
