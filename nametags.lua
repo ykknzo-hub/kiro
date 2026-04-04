@@ -1,7 +1,9 @@
-local plrs = game:GetService("Players")
-repeat task.wait(0.1) until plrs.LocalPlayer
-local lp = plrs.LocalPlayer
+-- [[ KIRO Nametag System v2 ]]
+-- Redesigned with square-ish rounded nametags
 
+-- =============================================
+-- GRADIENT CONFIGURATION
+-- =============================================
 local GRADIENT_COLOR_A    = Color3.fromRGB(255, 255, 255)
 local GRADIENT_COLOR_B    = Color3.fromRGB(0, 0, 0)
 local GRADIENT_SPIN_SPEED = 60
@@ -28,33 +30,23 @@ local mutualPlrs    = {}
 
 local defaultTagSz  = UDim2.new(0, 200, 0, 52)
 local tagOff        = Vector3.new(0, 2.2, 0)
-local LOGO_ASSET_ID = "rbxassetid://121655015965144" -- default logo for normal users
+local LOGO_ASSET_ID = "rbxassetid://121655015965144"
 local TAG_CORNER    = UDim.new(0, 10)
 
 local customPlayers = {
 	["Robloxianw3s1j0e2o"] = {
-		color       = Color3.fromRGB(255,0,0),
-		glowColor   = Color3.fromRGB(255,0,0),
-		customName  = "I OWN KIRO",
-		gradientA   = Color3.fromRGB(255,0,0),
-		gradientB   = Color3.fromRGB(0,0,0),
-		logoAssetId = "rbxassetid://102073235023063", 
+		color      = Color3.fromRGB(255,0,0),
+		glowColor  = Color3.fromRGB(255,0,0),
+		customName = "KIRO OWNER",
+		gradientA  = Color3.fromRGB(255,0,0),
+		gradientB  = Color3.fromRGB(0,0,0),
 	},
 	["6vryzx"] = {
-		color       = Color3.fromRGB(128,128,128),
-		glowColor   = Color3.fromRGB(0,0,0),
-		customName  = "KIRO CO-OWNER",
-		gradientA   = Color3.fromRGB(128,128,128),
-		gradientB   = Color3.fromRGB(0,0,0),
-		logoAssetId = "rbxassetid://131984265270669", 
-	},
-	["forrandomsthings"] = {
-		color       = Color3.fromRGB(0, 255, 255),
-		glowColor   = Color3.fromRGB(0, 255, 255),
-		customName  = "KIRO V3X",
-		gradientA   = Color3.fromRGB(0, 255, 255),
-		gradientB   = Color3.fromRGB(0, 255, 255),
-		logoAssetId = "rbxassetid://86149749300598"
+		color      = Color3.fromRGB(128,128,128),
+		glowColor  = Color3.fromRGB(0,0,0),
+		customName = "KIRO CO-OWNER",
+		gradientA  = Color3.fromRGB(128,128,128),
+		gradientB  = Color3.fromRGB(0,0,0),
 	},
 }
 
@@ -108,8 +100,6 @@ local function buildTag(plr)
 	local isOwner     = (displayName == "Kiro Owner")
 	local gradA       = (customData and customData.gradientA) or GRADIENT_COLOR_A
 	local gradB       = (customData and customData.gradientB) or GRADIENT_COLOR_B
-	-- Custom players use their own logoAssetId if set; normal users always use the global default
-	local logoAsset   = (customData and customData.logoAssetId) or LOGO_ASSET_ID
 
 	local bb = Instance.new("BillboardGui")
 	bb.Name        = "KiroTag_" .. plr.UserId
@@ -218,7 +208,7 @@ local function buildTag(plr)
 	logoImg.Parent               = logoHolder
 	logoImg.Size                 = UDim2.new(1, 0, 1, 0)
 	logoImg.BackgroundTransparency = 1
-	logoImg.Image                = logoAsset -- uses custom asset ID if set, otherwise default
+	logoImg.Image                = (customData and customData.logoAsset) or LOGO_ASSET_ID
 	logoImg.ScaleType            = Enum.ScaleType.Fit
 	logoImg.ZIndex               = 5
 
