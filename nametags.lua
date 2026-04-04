@@ -48,6 +48,7 @@ local customPlayers = {
 		customName = "KIRO CO-OWNER",
 		gradientA  = Color3.fromRGB(128,128,128),
 		gradientB  = Color3.fromRGB(0,0,0),
+		logoAsset  = "rbxassetid://123527545807705",
 	},
 }
 
