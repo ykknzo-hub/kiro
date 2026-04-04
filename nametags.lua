@@ -56,7 +56,7 @@ local customPlayers = {
 		customName  = "KIRO V3X",
 		gradientA   = Color3.fromRGB(0, 255, 255),
 		gradientB   = Color3.fromRGB(0, 255, 255),
-		logoAssetId = "rbxassetid://86149749300598", 
+		logoAssetId = "rbxassetid://86149749300598"
 	},
 }
 
