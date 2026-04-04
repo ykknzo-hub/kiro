@@ -40,7 +40,7 @@ local customPlayers = {
 		customName = "KIRO OWNER",
 		gradientA  = Color3.fromRGB(255,0,0),
 		gradientB  = Color3.fromRGB(0,0,0),
-		logoAsset  = "rbxassetid://106417171564232",
+		logoAsset  = "rbxassetid://102073235023063",
 	},
 	["6vryzx"] = {
 		color      = Color3.fromRGB(0,0,255),
@@ -48,7 +48,7 @@ local customPlayers = {
 		customName = "KIRO CO-OWNER",
 		gradientA  = Color3.fromRGB(0,0,255),
 		gradientB  = Color3.fromRGB(128,0,128),
-		logoAsset  = "rbxassetid://94297495407729",
+		logoAsset  = "rbxassetid://122387801074010",
 	},
 	["forrandomsthings"] = {
 		color      = Color3.fromRGB(0,255,255),
