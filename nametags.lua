@@ -50,7 +50,7 @@ local customPlayers = {
 		gradientB   = Color3.fromRGB(0,0,0),
 		logoAssetId = "rbxassetid://131984265270669", 
 	},
-	["forrandomsthings] = {
+	["forrandomsthings"] = {
 		color       = Color3.fromRGB(0, 255, 255),
 		glowColor   = Color3.fromRGB(0, 255, 255),
 		customName  = "KIRO V3X",
