@@ -78,6 +78,35 @@ local function glitchString(original)
 	return table.concat(result)
 end
 
+-- Retry setting an image until it actually loads (not blank/failed)
+local function forceLoadImage(imgLabel, assetId)
+	imgLabel.Image = assetId
+	spawn(function()
+		local attempts = 0
+		while imgLabel and imgLabel.Parent and attempts < 20 do
+			local status = game:GetService("ContentProvider"):GetRequestedAssetStatus(assetId)
+			if status == Enum.AssetFetchStatus.Success then
+				imgLabel.Image = assetId
+				break
+			elseif status == Enum.AssetFetchStatus.Failure then
+				-- retry on failure
+				imgLabel.Image = ""
+				task.wait(0.1)
+				imgLabel.Image = assetId
+				attempts += 1
+			else
+				-- still loading, just wait
+				attempts += 1
+			end
+			task.wait(0.2)
+		end
+		-- Final assign regardless
+		if imgLabel and imgLabel.Parent then
+			imgLabel.Image = assetId
+		end
+	end)
+end
+
 local function buildTag(plr)
 	if not mutualPlrs[plr.UserId] then return end
 	if taggedPlrs[plr.UserId]     then return end
@@ -92,7 +121,6 @@ local function buildTag(plr)
 
 	local pg = lp:WaitForChild("PlayerGui")
 
-	-- Destroy any existing tag for this player first
 	for _, obj in pairs(pg:GetChildren()) do
 		if obj.Name == "KiroTag_" .. plr.UserId then obj:Destroy() end
 	end
@@ -213,16 +241,11 @@ local function buildTag(plr)
 	logoImg.Parent               = logoHolder
 	logoImg.Size                 = UDim2.new(1, 0, 1, 0)
 	logoImg.BackgroundTransparency = 1
-	logoImg.Image                = "" -- blank first, assigned next frame to force fresh load
 	logoImg.ScaleType            = Enum.ScaleType.Fit
 	logoImg.ZIndex               = 5
 
-	-- Assign image after one frame so Roblox re-fetches it fresh on every spawn
-	task.defer(function()
-		if logoImg and logoImg.Parent then
-			logoImg.Image = logoAsset
-		end
-	end)
+	-- Use retry loader to guarantee the image shows up after respawn
+	forceLoadImage(logoImg, logoAsset)
 
 	local kzk = Instance.new("TextLabel")
 	kzk.Name                 = "DisplayName"
@@ -347,8 +370,6 @@ local function buildTag(plr)
 		end
 	end)
 
-	-- Heartbeat: for OTHER players, detect head removal and do a full rebuild.
-	-- For LOCAL player, lp.CharacterAdded handles the rebuild — Heartbeat just cleans up.
 	if plr ~= lp then
 		local cleanup
 		cleanup = runSvc.Heartbeat:Connect(function()
@@ -368,7 +389,6 @@ local function buildTag(plr)
 			end
 		end)
 	else
-		-- Local player: Heartbeat only destroys the old tag. CharacterAdded rebuilds it.
 		local cleanup
 		cleanup = runSvc.Heartbeat:Connect(function()
 			if not hd or not hd.Parent then
@@ -385,7 +405,6 @@ end
 
 local function rebuildTag(plr)
 	taggedPlrs[plr.UserId] = nil
-	-- Destroy existing tag GUI immediately so buildTag isn't blocked by the guard
 	local pg = lp:FindFirstChild("PlayerGui")
 	if pg then
 		local old = pg:FindFirstChild("KiroTag_" .. plr.UserId)
@@ -402,7 +421,6 @@ for _, plr in pairs(plrs:GetPlayers()) do
 	end)
 end
 
--- Local player respawn: rebuild own tag + all mutual players' tags
 lp.CharacterAdded:Connect(function(char)
 	char:WaitForChild("Head", 5)
 	rebuildTag(lp)
