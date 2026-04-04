@@ -1,9 +1,7 @@
--- [[ KIRO Nametag System v2 ]]
--- Redesigned with square-ish rounded nametags
+local plrs = game:GetService("Players")
+repeat task.wait(0.1) until plrs.LocalPlayer
+local lp = plrs.LocalPlayer
 
--- =============================================
--- GRADIENT CONFIGURATION
--- =============================================
 local GRADIENT_COLOR_A    = Color3.fromRGB(255, 255, 255)
 local GRADIENT_COLOR_B    = Color3.fromRGB(0, 0, 0)
 local GRADIENT_SPIN_SPEED = 60
