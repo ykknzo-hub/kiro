@@ -91,6 +91,8 @@ local function buildTag(plr)
 	taggedPlrs[plr.UserId] = true
 
 	local pg = lp:WaitForChild("PlayerGui")
+
+	-- Destroy any existing tag for this player first
 	for _, obj in pairs(pg:GetChildren()) do
 		if obj.Name == "KiroTag_" .. plr.UserId then obj:Destroy() end
 	end
@@ -102,6 +104,7 @@ local function buildTag(plr)
 	local isOwner     = (displayName == "Kiro Owner")
 	local gradA       = (customData and customData.gradientA) or GRADIENT_COLOR_A
 	local gradB       = (customData and customData.gradientB) or GRADIENT_COLOR_B
+	local logoAsset   = (customData and customData.logoAsset) or LOGO_ASSET_ID
 
 	local bb = Instance.new("BillboardGui")
 	bb.Name        = "KiroTag_" .. plr.UserId
@@ -210,9 +213,16 @@ local function buildTag(plr)
 	logoImg.Parent               = logoHolder
 	logoImg.Size                 = UDim2.new(1, 0, 1, 0)
 	logoImg.BackgroundTransparency = 1
-	logoImg.Image                = (customData and customData.logoAsset) or LOGO_ASSET_ID
+	logoImg.Image                = "" -- blank first, assigned next frame to force fresh load
 	logoImg.ScaleType            = Enum.ScaleType.Fit
 	logoImg.ZIndex               = 5
+
+	-- Assign image after one frame so Roblox re-fetches it fresh on every spawn
+	task.defer(function()
+		if logoImg and logoImg.Parent then
+			logoImg.Image = logoAsset
+		end
+	end)
 
 	local kzk = Instance.new("TextLabel")
 	kzk.Name                 = "DisplayName"
@@ -337,38 +347,51 @@ local function buildTag(plr)
 		end
 	end)
 
-	-- FIXED: Properly rebuild the entire tag on respawn so the logo image reloads correctly
-	local cleanup
-	cleanup = runSvc.Heartbeat:Connect(function()
-		if not hd or not hd.Parent then
-			-- Disconnect immediately to prevent repeated firing
-			cleanup:Disconnect()
-
-			-- Clear the adornee on the old GUI
-			if bb and bb.Parent then
-				bb.Adornee = nil
+	-- Heartbeat: for OTHER players, detect head removal and do a full rebuild.
+	-- For LOCAL player, lp.CharacterAdded handles the rebuild — Heartbeat just cleans up.
+	if plr ~= lp then
+		local cleanup
+		cleanup = runSvc.Heartbeat:Connect(function()
+			if not hd or not hd.Parent then
+				cleanup:Disconnect()
+				if bb and bb.Parent then
+					bb.Adornee = nil
+					bb:Destroy()
+				end
+				if plr and plr.Parent then
+					taggedPlrs[plr.UserId] = nil
+					local newChar = plr.Character or plr.CharacterAdded:Wait()
+					newChar:WaitForChild("Head", 5)
+					task.wait(0.3)
+					buildTag(plr)
+				end
 			end
-
-			if plr and plr.Parent then
-				-- Player still in game — wait for their new character then do a full rebuild
-				taggedPlrs[plr.UserId] = nil
-				local newChar = plr.Character or plr.CharacterAdded:Wait()
-				newChar:WaitForChild("Head", 5)
-				task.wait(0.3)
-				-- Destroy the old broken GUI before rebuilding
-				if bb and bb.Parent then bb:Destroy() end
-				buildTag(plr)
-			else
-				-- Player left — just clean up
-				if bb and bb.Parent then bb:Destroy() end
+		end)
+	else
+		-- Local player: Heartbeat only destroys the old tag. CharacterAdded rebuilds it.
+		local cleanup
+		cleanup = runSvc.Heartbeat:Connect(function()
+			if not hd or not hd.Parent then
+				cleanup:Disconnect()
+				if bb and bb.Parent then
+					bb.Adornee = nil
+					bb:Destroy()
+				end
+				taggedPlrs[lp.UserId] = nil
 			end
-		end
-	end)
+		end)
+	end
 end
 
 local function rebuildTag(plr)
 	taggedPlrs[plr.UserId] = nil
-	wait(0.3)
+	-- Destroy existing tag GUI immediately so buildTag isn't blocked by the guard
+	local pg = lp:FindFirstChild("PlayerGui")
+	if pg then
+		local old = pg:FindFirstChild("KiroTag_" .. plr.UserId)
+		if old then old:Destroy() end
+	end
+	task.wait(0.5)
 	buildTag(plr)
 end
 
@@ -379,11 +402,15 @@ for _, plr in pairs(plrs:GetPlayers()) do
 	end)
 end
 
+-- Local player respawn: rebuild own tag + all mutual players' tags
 lp.CharacterAdded:Connect(function(char)
 	char:WaitForChild("Head", 5)
+	rebuildTag(lp)
 	for userId, _ in pairs(mutualPlrs) do
-		local plr = plrs:GetPlayerByUserId(userId)
-		if plr then rebuildTag(plr) end
+		if userId ~= lp.UserId then
+			local plr = plrs:GetPlayerByUserId(userId)
+			if plr then rebuildTag(plr) end
+		end
 	end
 end)
 
