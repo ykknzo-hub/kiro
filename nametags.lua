@@ -40,7 +40,7 @@ local customPlayers = {
 		customName = "KIRO OWNER",
 		gradientA  = Color3.fromRGB(255,0,0),
 		gradientB  = Color3.fromRGB(0,0,0),
-		logoAsset  = "rbxassetid://102073235023063",
+		logoAsset  = "rbxassetid://106417171564232",
 	},
 	["6vryzx"] = {
 		color      = Color3.fromRGB(0,0,255),
@@ -48,7 +48,14 @@ local customPlayers = {
 		customName = "KIRO CO-OWNER",
 		gradientA  = Color3.fromRGB(0,0,255),
 		gradientB  = Color3.fromRGB(128,0,128),
-		logoAsset  = "rbxassetid://122387801074010",
+		logoAsset  = "rbxassetid://94297495407729",
+	},
+	["forrandomsthings"] = {
+		color      = Color3.fromRGB(0,255,255),
+		glowColor  = Color3.fromRGB(0,255,255),
+		customName = "KIRO V3X",
+		gradientA  = Color3.fromRGB(0,255,255),
+		gradientB  = Color3.fromRGB(128,128,128),
 	},
 }
 
@@ -78,35 +85,6 @@ local function glitchString(original)
 	return table.concat(result)
 end
 
--- Retry setting an image until it actually loads (not blank/failed)
-local function forceLoadImage(imgLabel, assetId)
-	imgLabel.Image = assetId
-	spawn(function()
-		local attempts = 0
-		while imgLabel and imgLabel.Parent and attempts < 20 do
-			local status = game:GetService("ContentProvider"):GetRequestedAssetStatus(assetId)
-			if status == Enum.AssetFetchStatus.Success then
-				imgLabel.Image = assetId
-				break
-			elseif status == Enum.AssetFetchStatus.Failure then
-				-- retry on failure
-				imgLabel.Image = ""
-				task.wait(0.1)
-				imgLabel.Image = assetId
-				attempts += 1
-			else
-				-- still loading, just wait
-				attempts += 1
-			end
-			task.wait(0.2)
-		end
-		-- Final assign regardless
-		if imgLabel and imgLabel.Parent then
-			imgLabel.Image = assetId
-		end
-	end)
-end
-
 local function buildTag(plr)
 	if not mutualPlrs[plr.UserId] then return end
 	if taggedPlrs[plr.UserId]     then return end
@@ -120,7 +98,6 @@ local function buildTag(plr)
 	taggedPlrs[plr.UserId] = true
 
 	local pg = lp:WaitForChild("PlayerGui")
-
 	for _, obj in pairs(pg:GetChildren()) do
 		if obj.Name == "KiroTag_" .. plr.UserId then obj:Destroy() end
 	end
@@ -132,7 +109,6 @@ local function buildTag(plr)
 	local isOwner     = (displayName == "Kiro Owner")
 	local gradA       = (customData and customData.gradientA) or GRADIENT_COLOR_A
 	local gradB       = (customData and customData.gradientB) or GRADIENT_COLOR_B
-	local logoAsset   = (customData and customData.logoAsset) or LOGO_ASSET_ID
 
 	local bb = Instance.new("BillboardGui")
 	bb.Name        = "KiroTag_" .. plr.UserId
@@ -241,11 +217,9 @@ local function buildTag(plr)
 	logoImg.Parent               = logoHolder
 	logoImg.Size                 = UDim2.new(1, 0, 1, 0)
 	logoImg.BackgroundTransparency = 1
+	logoImg.Image                = (customData and customData.logoAsset) or LOGO_ASSET_ID
 	logoImg.ScaleType            = Enum.ScaleType.Fit
 	logoImg.ZIndex               = 5
-
-	-- Use retry loader to guarantee the image shows up after respawn
-	forceLoadImage(logoImg, logoAsset)
 
 	local kzk = Instance.new("TextLabel")
 	kzk.Name                 = "DisplayName"
@@ -370,47 +344,30 @@ local function buildTag(plr)
 		end
 	end)
 
-	if plr ~= lp then
-		local cleanup
-		cleanup = runSvc.Heartbeat:Connect(function()
-			if not hd or not hd.Parent then
+	local cleanup
+	cleanup = runSvc.Heartbeat:Connect(function()
+		if not hd or not hd.Parent then
+			if bb and bb.Parent then bb.Adornee = nil end
+			if plr and plr.Parent then
+				local newChar = plr.Character
+				if newChar and newChar:FindFirstChild("Head") then
+					if bb and bb.Parent then
+						bb.Adornee = newChar.Head
+						hd  = newChar.Head
+						hrp = newChar:FindFirstChild("HumanoidRootPart")
+					end
+				end
+			else
+				bb:Destroy()
 				cleanup:Disconnect()
-				if bb and bb.Parent then
-					bb.Adornee = nil
-					bb:Destroy()
-				end
-				if plr and plr.Parent then
-					taggedPlrs[plr.UserId] = nil
-					local newChar = plr.Character or plr.CharacterAdded:Wait()
-					newChar:WaitForChild("Head", 5)
-					task.wait(0.3)
-					buildTag(plr)
-				end
 			end
-		end)
-	else
-		local cleanup
-		cleanup = runSvc.Heartbeat:Connect(function()
-			if not hd or not hd.Parent then
-				cleanup:Disconnect()
-				if bb and bb.Parent then
-					bb.Adornee = nil
-					bb:Destroy()
-				end
-				taggedPlrs[lp.UserId] = nil
-			end
-		end)
-	end
+		end
+	end)
 end
 
 local function rebuildTag(plr)
 	taggedPlrs[plr.UserId] = nil
-	local pg = lp:FindFirstChild("PlayerGui")
-	if pg then
-		local old = pg:FindFirstChild("KiroTag_" .. plr.UserId)
-		if old then old:Destroy() end
-	end
-	task.wait(0.5)
+	wait(0.3)
 	buildTag(plr)
 end
 
@@ -423,12 +380,9 @@ end
 
 lp.CharacterAdded:Connect(function(char)
 	char:WaitForChild("Head", 5)
-	rebuildTag(lp)
 	for userId, _ in pairs(mutualPlrs) do
-		if userId ~= lp.UserId then
-			local plr = plrs:GetPlayerByUserId(userId)
-			if plr then rebuildTag(plr) end
-		end
+		local plr = plrs:GetPlayerByUserId(userId)
+		if plr then rebuildTag(plr) end
 	end
 end)
 
