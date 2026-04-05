@@ -72,7 +72,13 @@ local customPlayers = {
 		customName = "KIRO STAFF",
 		gradientA  = Color3.fromRGB(128,0,128),
 		gradientB  = Color3.fromRGB(128,0,128),
-		logoAsset  = "rbxassetid://121655015965144",
+	},
+	["Adamalchoum2"] = {
+		color      = Color3.fromRGB(128,0,128),
+		glowColor  = Color3.fromRGB(128,0,128),
+		customName = "KIRO STAFF",
+		gradientA  = Color3.fromRGB(128,0,128),
+		gradientB  = Color3.fromRGB(128,0,128),
 	},
 }
 
