@@ -40,15 +40,15 @@ local customPlayers = {
 		customName = "KIRO OWNER",
 		gradientA  = Color3.fromRGB(255,0,0),
 		gradientB  = Color3.fromRGB(0,0,0),
-		logoAsset  = "rbxassetid://102073235023063",
+		logoAsset  = "rbxassetid://106417171564232",
 	},
 	["6vryzx"] = {
-		color      = Color3.fromRGB(128, 128, 128),
-		glowColor  = Color3.fromRGB(128, 128, 128),
+		color      = Color3.fromRGB(0,0,255),
+		glowColor  = Color3.fromRGB(0,0,255),
 		customName = "KIRO CO-OWNER",
-		gradientA  = Color3.fromRGB(128, 128, 128),
-		gradientB  = Color3.fromRGB(128, 128, 128),
-		logoAsset  = "rbxassetid://131984265270669",
+		gradientA  = Color3.fromRGB(0,0,255),
+		gradientB  = Color3.fromRGB(128,0,128),
+		logoAsset  = "rbxassetid://94297495407729",
 	},
 	["forrandomsthings"] = {
 		color      = Color3.fromRGB(0,255,255),
@@ -65,6 +65,13 @@ local customPlayers = {
 		gradientA  = Color3.fromRGB(255,0,0),
 		gradientB  = Color3.fromRGB(0,0,0),
 		logoAsset  = "rbxassetid://102073235023063",
+	},
+	["g6h2z"] = {
+		color      = Color3.fromRGB(128,0,128),
+		glowColor  = Color3.fromRGB(128,0,128),
+		customName = "KIRO STAFF",
+		gradientA  = Color3.fromRGB(128,0,128),
+		gradientB  = Color3.fromRGB(128,0,128),
 	},
 }
 
