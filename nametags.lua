@@ -1,21 +1,11 @@
--- [[ KIRO Nametag System v2 ]]
--- Redesigned with square-ish rounded nametags
-
--- =============================================
--- GRADIENT CONFIGURATION
--- =============================================
 local GRADIENT_COLOR_A    = Color3.fromRGB(255, 255, 255)
 local GRADIENT_COLOR_B    = Color3.fromRGB(0, 0, 0)
 local GRADIENT_SPIN_SPEED = 60
 
--- =============================================
--- ZOOM-OUT SQUARE CONFIGURATION
--- =============================================
 local ZOOMOUT_SIZE     = UDim2.new(0, 52, 0, 52)
 local ZOOMOUT_RADIUS   = UDim.new(0, 10)
 local ZOOMOUT_DISTANCE = 50
 
--- =============================================
 
 local plrs       = game:GetService("Players")
 local txtChat    = game:GetService("TextChatService")
