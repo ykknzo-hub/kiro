@@ -35,12 +35,12 @@ local TAG_CORNER    = UDim.new(0, 10)
 
 local customPlayers = {
 	["Robloxianw3s1j0e2o"] = {
-		color      = Color3.fromRGB(255,0,0),
-		glowColor  = Color3.fromRGB(255,0,0),
+		color      = Color3.fromRGB(255, 192, 203),
+		glowColor  = Color3.fromRGB(255, 192, 203),
 		customName = "KIRO OWNER",
-		gradientA  = Color3.fromRGB(255,0,0),
-		gradientB  = Color3.fromRGB(0,0,0),
-		logoAsset  = "rbxassetid://102073235023063",
+		gradientA  = Color3.fromRGB(255, 192, 203),
+		gradientB  = Color3.fromRGB(255, 192, 203),
+		logoAsset  = "rbxassetid://88344135795603",
 	},
 	["6vryzx"] = {
 		color      = Color3.fromRGB(0,0,255),
