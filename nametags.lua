@@ -51,13 +51,13 @@ end
 local customPlayers = {
 	["Robloxianw3s1j0e2o"] = {
 		customName     = "KIRO OWNER",
-		gradientA      = Color3.fromRGB(255, 0, 0),
-		gradientB      = Color3.fromRGB(0, 0, 0),
+		gradientA      = Color3.fromRGB(255, 128, 139),
+		gradientB      = Color3.fromRGB(255,255,255),
 		logoAsset      = "rbxassetid://88344135795603",
 		rankEffect     = "glitch",
 	},
 	["6vryzx"] = {
-		customName     = "CO-OWNER",
+		customName     = "KIRO CO-OWNER",
 		gradientA      = Color3.fromRGB(0, 0, 255),
 		gradientB      = Color3.fromRGB(0, 0, 0),
 		logoAsset      = "rbxassetid://131090669162422",
