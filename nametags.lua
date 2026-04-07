@@ -1,11 +1,21 @@
+-- [[ KIRO Nametag System v2 ]]
+-- Redesigned with square-ish rounded nametags
+
+-- =============================================
+-- GRADIENT CONFIGURATION
+-- =============================================
 local GRADIENT_COLOR_A    = Color3.fromRGB(255, 255, 255)
 local GRADIENT_COLOR_B    = Color3.fromRGB(0, 0, 0)
 local GRADIENT_SPIN_SPEED = 60
 
+-- =============================================
+-- ZOOM-OUT SQUARE CONFIGURATION
+-- =============================================
 local ZOOMOUT_SIZE     = UDim2.new(0, 52, 0, 52)
 local ZOOMOUT_RADIUS   = UDim.new(0, 10)
 local ZOOMOUT_DISTANCE = 50
 
+-- =============================================
 
 local plrs       = game:GetService("Players")
 local txtChat    = game:GetService("TextChatService")
@@ -25,20 +35,20 @@ local TAG_CORNER    = UDim.new(0, 10)
 
 local customPlayers = {
 	["Robloxianw3s1j0e2o"] = {
-		color      = Color3.fromRGB(255, 192, 203),
-		glowColor  = Color3.fromRGB(255, 192, 203),
+		color      = Color3.fromRGB(255,0,0),
+		glowColor  = Color3.fromRGB(255,0,0),
 		customName = "KIRO OWNER",
-		gradientA  = Color3.fromRGB(255, 192, 203),
-		gradientB  = Color3.fromRGB(255, 192, 203),
-		logoAsset  = "rbxassetid://88344135795603",
+		gradientA  = Color3.fromRGB(255,0,0),
+		gradientB  = Color3.fromRGB(0,0,0),
+		logoAsset  = "rbxassetid://106417171564232",
 	},
 	["6vryzx"] = {
-		color      = Color3.fromRGB(0,0,255),
-		glowColor  = Color3.fromRGB(0,0,255),
+		color      = Color3.fromRGB(255,255,0),
+		glowColor  = Color3.fromRGB(255,255,0),
 		customName = "KIRO CO-OWNER",
-		gradientA  = Color3.fromRGB(0,0,255),
-		gradientB  = Color3.fromRGB(128,0,128),
-		logoAsset  = "rbxassetid://122387801074010",
+		gradientA  = Color3.fromRGB(255,255,0),
+		gradientB  = Color3.fromRGB(255,255,0),
+		logoAsset  = "rbxassetid://94297495407729",
 	},
 	["forrandomsthings"] = {
 		color      = Color3.fromRGB(0,255,255),
@@ -62,7 +72,6 @@ local customPlayers = {
 		customName = "KIRO STAFF",
 		gradientA  = Color3.fromRGB(128,0,128),
 		gradientB  = Color3.fromRGB(128,0,128),
-		logoAsset  = "rbxassetid://121655015965144",
 	},
 	["Adamalchoum2"] = {
 		color      = Color3.fromRGB(128,0,128),
@@ -70,7 +79,6 @@ local customPlayers = {
 		customName = "KIRO STAFF",
 		gradientA  = Color3.fromRGB(128,0,128),
 		gradientB  = Color3.fromRGB(128,0,128),
-		logoAsset  = "rbxassetid://121655015965144",
 	},
 }
 
