@@ -1,97 +1,175 @@
--- [[ KIRO Nametag System v2 ]]
--- Redesigned with square-ish rounded nametags
-
--- =============================================
--- GRADIENT CONFIGURATION
--- =============================================
 local GRADIENT_COLOR_A    = Color3.fromRGB(255, 255, 255)
 local GRADIENT_COLOR_B    = Color3.fromRGB(0, 0, 0)
 local GRADIENT_SPIN_SPEED = 60
 
--- =============================================
--- ZOOM-OUT SQUARE CONFIGURATION
--- =============================================
-local ZOOMOUT_SIZE     = UDim2.new(0, 52, 0, 52)
-local ZOOMOUT_RADIUS   = UDim.new(0, 10)
-local ZOOMOUT_DISTANCE = 50
+local ZOOMOUT_SIZE     = UDim2.new(0, 38, 0, 38)
+local ZOOMOUT_RADIUS   = UDim.new(0, 8)
+local ZOOMOUT_DISTANCE = 60
 
--- =============================================
-
-local plrs       = game:GetService("Players")
-local txtChat    = game:GetService("TextChatService")
-local tweenSvc   = game:GetService("TweenService")
-local runSvc     = game:GetService("RunService")
-local starterGui = game:GetService("StarterGui")
-local lp         = plrs.LocalPlayer
-
-local taggedPlrs    = {}
-local respondedPlrs = {}
-local mutualPlrs    = {}
-
-local defaultTagSz  = UDim2.new(0, 200, 0, 52)
-local tagOff        = Vector3.new(0, 2.2, 0)
-local LOGO_ASSET_ID = "rbxassetid://121655015965144"
-local TAG_CORNER    = UDim.new(0, 10)
-
-local customPlayers = {
-	["Robloxianw3s1j0e2o"] = {
-		color      = Color3.fromRGB(255,0,0),
-		glowColor  = Color3.fromRGB(255,0,0),
-		customName = "KIRO OWNER",
-		gradientA  = Color3.fromRGB(255,0,0),
-		gradientB  = Color3.fromRGB(0,0,0),
-		logoAsset  = "rbxassetid://88344135795603",
+local THEMES = {
+	purple = {
+		Color3.fromRGB(150,  60, 255),
+		Color3.fromRGB(255, 150, 255),
 	},
-	["6vryzx"] = {
-		color      = Color3.fromRGB(255,255,0),
-		glowColor  = Color3.fromRGB(255,255,0),
-		customName = "KIRO CO-OWNER",
-		gradientA  = Color3.fromRGB(255,255,0),
-		gradientB  = Color3.fromRGB(255,255,0),
-		logoAsset  = "rbxassetid://94297495407729",
+	gold = {
+		Color3.fromRGB(255, 180,  20),
+		Color3.fromRGB(255, 255, 180),
 	},
-	["forrandomsthings"] = {
-		color      = Color3.fromRGB(0,255,255),
-		glowColor  = Color3.fromRGB(0,255,255),
-		customName = "KIRO V3X",
-		gradientA  = Color3.fromRGB(0,255,255),
-		gradientB  = Color3.fromRGB(128,128,128),
-		logoAsset  = "rbxassetid://86149749300598",
+	cyan = {
+		Color3.fromRGB( 20, 200, 255),
+		Color3.fromRGB(180, 255, 255),
 	},
-	["isntkalay"] = {
-		color      = Color3.fromRGB(255,0,0),
-		glowColor  = Color3.fromRGB(255,0,0),
-		customName = "Kiro Owner ALT",
-		gradientA  = Color3.fromRGB(255,0,0),
-		gradientB  = Color3.fromRGB(0,0,0),
-		logoAsset  = "rbxassetid://102073235023063",
+	fire = {
+		Color3.fromRGB(255,  50,   0),
+		Color3.fromRGB(255, 230,  50),
 	},
-	["g6h2z"] = {
-		color      = Color3.fromRGB(128,0,128),
-		glowColor  = Color3.fromRGB(128,0,128),
-		customName = "KIRO STAFF",
-		gradientA  = Color3.fromRGB(128,0,128),
-		gradientB  = Color3.fromRGB(128,0,128),
-	},
-	["Adamalchoum2"] = {
-		color      = Color3.fromRGB(128,0,128),
-		glowColor  = Color3.fromRGB(128,0,128),
-		customName = "KIRO STAFF",
-		gradientA  = Color3.fromRGB(128,0,128),
-		gradientB  = Color3.fromRGB(128,0,128),
+	bw = {
+		Color3.fromRGB(40, 40, 40),
+		Color3.fromRGB(220, 220, 220),
 	},
 }
 
-starterGui:SetCore("SendNotification", {
-	Title    = "Kiro Nametags";
-	Text     = "Nametag system loaded";
-	Duration = 5;
-})
+local CONFIG = {
+	RankText           = "KIRO USER",
+	DisplayName        = "@user",
+	Theme              = "bw",
 
-local function getCustomData(plr)
-	if customPlayers[plr.Name]   then return customPlayers[plr.Name]   end
-	if customPlayers[plr.UserId] then return customPlayers[plr.UserId] end
-	return nil
+	ShimmerEnabled     = true,
+	PulseEnabled       = true,
+	RainbowRankEnabled = false,
+	FloatAmplitude     = 0.08,
+	FloatSpeed         = 1.4,
+
+	-- RankEffect options: "typing" | "glitch" | "wave" | "none"
+	RankEffect         = "typing",
+}
+
+local function getThemeColors()
+	return THEMES[CONFIG.Theme] or THEMES.purple
+end
+
+local customPlayers = {
+	["Robloxianw3s1j0e2o"] = {
+		customName     = "KIRO OWNER",
+		gradientA      = Color3.fromRGB(255, 0, 0),
+		gradientB      = Color3.fromRGB(0, 0, 0),
+		logoAsset      = "rbxassetid://88344135795603",
+		rankEffect     = "glitch",
+	},
+	["6vryzx"] = {
+		customName     = "CO-OWNER",
+		gradientA      = Color3.fromRGB(0, 0, 255),
+		gradientB      = Color3.fromRGB(0, 0, 0),
+		logoAsset      = "rbxassetid://131090669162422",
+		rankEffect     = "glitch",
+	},
+	["isntkalay"] = {
+		customName     = "Kiro Owner ALT",
+		gradientA      = Color3.fromRGB(255, 0, 0),
+		gradientB      = Color3.fromRGB(0, 0, 0),
+		logoAsset      = "rbxassetid://102073235023063",
+		rankEffect     = "glitch",
+	},
+	["forrandomsthings"] = {
+		customName     = "KIRO V3X",
+		gradientA      = Color3.fromRGB(0, 255, 255),
+		gradientB      = Color3.fromRGB(128, 128, 128),
+		logoAsset      = "rbxassetid://86149749300598",
+		rankEffect     = "typing",
+	},
+	["g6h2z"] = {
+		customName     = "KIRO STAFF",
+		gradientA      = Color3.fromRGB(128, 0, 128),
+		gradientB      = Color3.fromRGB(60, 0, 80),
+		rankEffect     = "typing",
+	},
+	["Adamalchoum2"] = {
+		customName     = "KIRO STAFF",
+		gradientA      = Color3.fromRGB(128, 0, 128),
+		gradientB      = Color3.fromRGB(60, 0, 80),
+		rankEffect     = "typing",
+	},
+}
+
+local function lerp(a, b, t) return a + (b - a) * t end
+
+local function lerpColor(c1, c2, t)
+	return Color3.new(
+		lerp(c1.R, c2.R, t),
+		lerp(c1.G, c2.G, t),
+		lerp(c1.B, c2.B, t)
+	)
+end
+
+local function cyclicLerp(colors, t)
+	local n    = #colors
+	local pos  = (t % 1) * n
+	local idx  = math.floor(pos) + 1
+	local frac = pos - math.floor(pos)
+	local c1   = colors[idx]
+	local c2   = colors[(idx % n) + 1]
+	return lerpColor(c1, c2, frac)
+end
+
+local function makeColorSequence(colors)
+	local kps = {}
+	for i, c in ipairs(colors) do
+		kps[i] = ColorSequenceKeypoint.new((i - 1) / (#colors - 1), c)
+	end
+	return ColorSequence.new(kps)
+end
+
+local function randomBetween(a, b) return a + math.random() * (b - a) end
+
+local function startTypingEffect(label, fullText, cursorLabel)
+	spawn(function()
+		local chars   = #fullText
+		local phase   = "pause_full"
+		local blinks  = 0
+		local curOn   = true
+
+		while label and label.Parent do
+			if phase == "pause_full" then
+				label.Text = fullText
+				if cursorLabel then cursorLabel.Text = "|" end
+				wait(1.5)
+				phase  = "blink_loop"
+				blinks = 0
+				curOn  = true
+
+			elseif phase == "blink_loop" then
+				curOn = not curOn
+				if cursorLabel then cursorLabel.Text = curOn and "|" or "" end
+				wait(0.5)
+				blinks = blinks + 0.5
+				if blinks >= 3 then
+					wait(0.3)
+					phase = "delete"
+					if cursorLabel then cursorLabel.Text = "|" end
+				end
+
+			elseif phase == "delete" then
+				if chars > 0 then
+					chars = chars - 1
+					label.Text = string.sub(fullText, 1, chars)
+					wait(0.05)
+				else
+					phase = "pause_empty"
+					wait(0.4)
+					phase = "type"
+				end
+
+			elseif phase == "type" then
+				if chars < #fullText then
+					chars = chars + 1
+					label.Text = string.sub(fullText, 1, chars)
+					wait(0.07)
+				else
+					phase = "pause_full"
+				end
+			end
+		end
+	end)
 end
 
 local GLITCH_CHARS = {"#","@","!","$","%","&","?","*","/","\\","|","~","^","X","Z"}
@@ -106,6 +184,108 @@ local function glitchString(original)
 		end
 	end
 	return table.concat(result)
+end
+
+local function startGlitchEffect(label, fullText)
+	spawn(function()
+		while label and label.Parent do
+			wait(randomBetween(2.0, 4.5))
+			if not label or not label.Parent then break end
+			local iters = math.random(5, 10)
+			for _ = 1, iters do
+				if not label or not label.Parent then break end
+				label.Text = glitchString(fullText)
+				wait(0.04)
+			end
+			if label and label.Parent then
+				label.Text = fullText
+			end
+		end
+	end)
+end
+
+-- Wave effect on rank label: per-character sine bounce
+-- Each character is a separate TextLabel positioned side-by-side.
+-- Returns a cleanup function.
+local function startWaveEffect(parent, fullText, basePos, textColor, font)
+	local CHAR_W  = 7
+	local startX  = basePos.X.Offset
+	local startYs = basePos.Y.Scale
+	local startYo = basePos.Y.Offset
+
+	local charLabels = {}
+	for i = 1, #fullText do
+		local ch  = string.sub(fullText, i, i)
+		local lbl = Instance.new("TextLabel")
+		lbl.Parent               = parent
+		lbl.Size                 = UDim2.new(0, CHAR_W + 2, 0, 16)
+		lbl.Position             = UDim2.new(basePos.X.Scale, startX + (i - 1) * CHAR_W, startYs, startYo)
+		lbl.BackgroundTransparency = 1
+		lbl.Text                 = ch == " " and "\u{00A0}" or ch
+		lbl.TextColor3           = textColor
+		lbl.Font                 = font
+		lbl.TextScaled           = false
+		lbl.TextSize             = 12
+		lbl.TextStrokeTransparency = 0.5
+		lbl.TextStrokeColor3     = Color3.fromRGB(0, 0, 0)
+		lbl.ZIndex               = 3
+		charLabels[i]            = lbl
+	end
+
+	local running = true
+
+	spawn(function()
+		local t = 0
+		while running do
+			t = t + 0.05
+			for i, lbl in ipairs(charLabels) do
+				if not lbl or not lbl.Parent then running = false break end
+				local wave = math.sin(t * 4 + (i - 1) * 0.75) * 2.8
+				lbl.Position = UDim2.new(
+					basePos.X.Scale,
+					startX + (i - 1) * CHAR_W,
+					startYs,
+					startYo + wave
+				)
+			end
+			wait(0.05)
+		end
+	end)
+
+	return function()
+		running = false
+		for _, lbl in ipairs(charLabels) do
+			if lbl and lbl.Parent then lbl:Destroy() end
+		end
+	end
+end
+
+local plrs       = game:GetService("Players")
+local txtChat    = game:GetService("TextChatService")
+local tweenSvc   = game:GetService("TweenService")
+local runSvc     = game:GetService("RunService")
+local starterGui = game:GetService("StarterGui")
+local lp         = plrs.LocalPlayer
+
+local taggedPlrs    = {}
+local respondedPlrs = {}
+local mutualPlrs    = {}
+
+local defaultTagSz  = UDim2.new(0, 160, 0, 44)
+local tagOff        = Vector3.new(0, 2.0, 0)
+local LOGO_ASSET_ID = "rbxassetid://121655015965144"
+local TAG_CORNER    = UDim.new(0, 8)
+
+starterGui:SetCore("SendNotification", {
+	Title    = "Kiro Nametags";
+	Text     = "Nametag system loaded";
+	Duration = 5;
+})
+
+local function getCustomData(plr)
+	if customPlayers[plr.Name]   then return customPlayers[plr.Name]   end
+	if customPlayers[plr.UserId] then return customPlayers[plr.UserId] end
+	return nil
 end
 
 local function buildTag(plr)
@@ -126,12 +306,30 @@ local function buildTag(plr)
 	end
 
 	local customData  = getCustomData(plr)
-	local tagColor    = customData and customData.color    or Color3.fromRGB(255, 255, 255)
-	local glowColor   = customData and customData.glowColor or Color3.fromRGB(255, 255, 255)
 	local displayName = customData and customData.customName or "Kiro User"
-	local isOwner     = (displayName == "Kiro Owner")
 	local gradA       = (customData and customData.gradientA) or GRADIENT_COLOR_A
 	local gradB       = (customData and customData.gradientB) or GRADIENT_COLOR_B
+
+	-- Resolve rank effect
+	local resolvedRankEffect
+	if customData then
+		resolvedRankEffect = customData.rankEffect or "none"
+	else
+		resolvedRankEffect = CONFIG.RankEffect
+	end
+
+	local function getColors()
+		if gradA and gradB then
+			return {gradA, gradB}
+		end
+		if plr == lp then
+			return getThemeColors()
+		end
+		return {GRADIENT_COLOR_A, GRADIENT_COLOR_B}
+	end
+
+	local finalColors = getColors()
+	local tagColor    = finalColors[1] or Color3.fromRGB(255, 255, 255)
 
 	local bb = Instance.new("BillboardGui")
 	bb.Name        = "KiroTag_" .. plr.UserId
@@ -163,14 +361,19 @@ local function buildTag(plr)
 	local bg = Instance.new("Frame")
 	bg.Parent               = bb
 	bg.Size                 = UDim2.new(1, 0, 1, 0)
-	bg.BackgroundColor3     = Color3.fromRGB(10, 10, 14)
+	bg.BackgroundColor3     = Color3.fromRGB(15, 12, 24)
 	bg.BorderSizePixel      = 0
-	bg.BackgroundTransparency = 0.15
+	bg.BackgroundTransparency = 0.12
 	bg.ZIndex               = 1
+	Instance.new("UICorner", bg).CornerRadius = TAG_CORNER
 
-	local cr = Instance.new("UICorner")
-	cr.CornerRadius = TAG_CORNER
-	cr.Parent       = bg
+	local bgGrad = Instance.new("UIGradient")
+	bgGrad.Color = ColorSequence.new({
+		ColorSequenceKeypoint.new(0, finalColors[1]),
+		ColorSequenceKeypoint.new(1, finalColors[2] or finalColors[1]),
+	})
+	bgGrad.Rotation = 135
+	bgGrad.Parent   = bg
 
 	local stroke = Instance.new("UIStroke")
 	stroke.Parent          = bg
@@ -178,61 +381,55 @@ local function buildTag(plr)
 	stroke.Thickness       = 1.5
 	stroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 	stroke.Transparency    = 0.4
-
 	local strokeGrad = Instance.new("UIGradient")
-	strokeGrad.Color    = ColorSequence.new(gradA, gradB)
+	strokeGrad.Color    = ColorSequence.new(finalColors[1], finalColors[2] or finalColors[1])
 	strokeGrad.Rotation = 0
 	strokeGrad.Parent   = stroke
 
-	local bgGrad = Instance.new("UIGradient")
-	bgGrad.Color = ColorSequence.new({
-		ColorSequenceKeypoint.new(0, Color3.fromRGB(15, 15, 20)),
-		ColorSequenceKeypoint.new(1, Color3.fromRGB(8, 8, 12)),
-	})
-	bgGrad.Transparency = NumberSequence.new({
-		NumberSequenceKeypoint.new(0, 0.1),
-		NumberSequenceKeypoint.new(1, 0.25),
-	})
-	bgGrad.Rotation = 0
-	bgGrad.Parent   = bg
+	local shimmer                      = Instance.new("Frame")
+	shimmer.Name                       = "Shimmer"
+	shimmer.Size                       = UDim2.new(0.35, 0, 1, 0)
+	shimmer.Position                   = UDim2.new(-0.35, 0, 0, 0)
+	shimmer.BackgroundColor3           = Color3.new(1, 1, 1)
+	shimmer.BackgroundTransparency     = 0.82
+	shimmer.BorderSizePixel            = 0
+	shimmer.ZIndex                     = 8
+	shimmer.ClipsDescendants           = false
+	shimmer.Parent                     = bg
+	Instance.new("UICorner", shimmer).CornerRadius = TAG_CORNER
 
-	spawn(function()
-		local rot = 0
-		local last = tick()
-		while bb and bb.Parent do
-			local now = tick()
-			rot = (rot + GRADIENT_SPIN_SPEED * (now - last)) % 360
-			last = now
-			strokeGrad.Rotation = rot
-			strokeGrad.Color = ColorSequence.new(gradA, gradB)
-			wait(1 / 30)
-		end
-	end)
+	local shimGrad = Instance.new("UIGradient")
+	shimGrad.Transparency = NumberSequence.new({
+		NumberSequenceKeypoint.new(0,    1),
+		NumberSequenceKeypoint.new(0.45, 0.6),
+		NumberSequenceKeypoint.new(0.5,  0.3),
+		NumberSequenceKeypoint.new(0.55, 0.6),
+		NumberSequenceKeypoint.new(1,    1),
+	})
+	shimGrad.Rotation = 15
+	shimGrad.Parent   = shimmer
 
-	local IMG_W       = 36
-	local IMG_PAD     = 8
-	local TEXT_OFFSET = IMG_PAD + IMG_W + 8
+	local IMG_W       = 32
+	local IMG_PAD     = 6
+	local TEXT_OFFSET = IMG_PAD + IMG_W + 6
 
 	local logoHolder = Instance.new("Frame")
 	logoHolder.Name               = "LogoHolder"
 	logoHolder.Parent             = bg
 	logoHolder.Size               = UDim2.new(0, IMG_W, 0, IMG_W)
 	logoHolder.Position           = UDim2.new(0, IMG_PAD, 0.5, -IMG_W/2)
-	logoHolder.BackgroundColor3   = Color3.fromRGB(20, 20, 28)
-	logoHolder.BackgroundTransparency = 0.3
+	logoHolder.BackgroundColor3   = Color3.fromRGB(25, 20, 35)
+	logoHolder.BackgroundTransparency = 1
 	logoHolder.BorderSizePixel    = 0
 	logoHolder.ZIndex             = 4
 	logoHolder.ClipsDescendants   = true
-
-	local logoCorner = Instance.new("UICorner")
-	logoCorner.CornerRadius = UDim.new(0, 8)
-	logoCorner.Parent       = logoHolder
+	Instance.new("UICorner", logoHolder).CornerRadius = UDim.new(1, 0)
 
 	local logoStroke = Instance.new("UIStroke")
 	logoStroke.Parent          = logoHolder
 	logoStroke.Color           = Color3.fromRGB(255, 255, 255)
 	logoStroke.Thickness       = 1
-	logoStroke.Transparency    = 0.6
+	logoStroke.Transparency    = 1
 	logoStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
 
 	local logoImg = Instance.new("ImageLabel")
@@ -243,6 +440,7 @@ local function buildTag(plr)
 	logoImg.Image                = (customData and customData.logoAsset) or LOGO_ASSET_ID
 	logoImg.ScaleType            = Enum.ScaleType.Fit
 	logoImg.ZIndex               = 5
+	Instance.new("UICorner", logoImg).CornerRadius = UDim.new(1, 0)
 
 	local kzk = Instance.new("TextLabel")
 	kzk.Name                 = "DisplayName"
@@ -251,7 +449,7 @@ local function buildTag(plr)
 	kzk.Position             = UDim2.new(0, TEXT_OFFSET, 0, 8)
 	kzk.BackgroundTransparency = 1
 	kzk.Text                 = displayName
-	kzk.TextColor3           = tagColor
+	kzk.TextColor3           = Color3.fromRGB(255, 255, 255)
 	kzk.TextScaled           = true
 	kzk.TextXAlignment       = Enum.TextXAlignment.Left
 	kzk.Font                 = Enum.Font.GothamBold
@@ -260,40 +458,72 @@ local function buildTag(plr)
 	kzk.ZIndex               = 3
 
 	local kzkConstraint = Instance.new("UITextSizeConstraint")
-	kzkConstraint.MaxTextSize = 14
+	kzkConstraint.MaxTextSize = 12
 	kzkConstraint.Parent      = kzk
+
+	local kzkGrad = Instance.new("UIGradient")
+	kzkGrad.Color    = ColorSequence.new(tagColor)
+	kzkGrad.Rotation = 0
+	kzkGrad.Parent   = kzk
+
+	local cursorLabel = Instance.new("TextLabel")
+	cursorLabel.Name                 = "TypingCursor"
+	cursorLabel.Parent               = bg
+	cursorLabel.Size                 = UDim2.new(0, 8, 0, 16)
+	cursorLabel.Position             = UDim2.new(0, TEXT_OFFSET, 0, 10)
+	cursorLabel.BackgroundTransparency = 1
+	cursorLabel.Text                 = ""
+	cursorLabel.TextColor3           = Color3.fromRGB(255, 255, 255)
+	cursorLabel.TextScaled           = true
+	cursorLabel.TextXAlignment       = Enum.TextXAlignment.Left
+	cursorLabel.Font                 = Enum.Font.GothamBold
+	cursorLabel.ZIndex               = 4
+	cursorLabel.Visible              = false
 
 	local dname = Instance.new("TextLabel")
 	dname.Name               = "Username"
 	dname.Parent             = bg
-	dname.Size               = UDim2.new(1, -(TEXT_OFFSET + 8), 0, 12)
-	dname.Position           = UDim2.new(0, TEXT_OFFSET, 0, 28)
+	dname.Size               = UDim2.new(1, -(TEXT_OFFSET + 8), 0, 10)
+	dname.Position           = UDim2.new(0, TEXT_OFFSET, 0.5, 3)
 	dname.BackgroundTransparency = 1
 	dname.Text               = "@" .. plr.Name
-	dname.TextColor3         = Color3.fromRGB(140, 140, 160)
+	dname.TextColor3         = Color3.fromRGB(255, 255, 255)
 	dname.TextScaled         = true
 	dname.TextXAlignment     = Enum.TextXAlignment.Left
 	dname.Font               = Enum.Font.Gotham
-	dname.TextStrokeTransparency = 0.8
+	dname.TextStrokeTransparency = 0.85
 	dname.ZIndex             = 3
 
+	local dnameGrad = Instance.new("UIGradient")
+	dnameGrad.Name   = "UserGrad"
+	dnameGrad.Color  = ColorSequence.new(finalColors[1], finalColors[2] or finalColors[1])
+	dnameGrad.Rotation = 0
+	dnameGrad.Parent = dname
+
 	local dnameConstraint = Instance.new("UITextSizeConstraint")
-	dnameConstraint.MaxTextSize = 10
+	dnameConstraint.MaxTextSize = 9
 	dnameConstraint.Parent      = dname
 
-	if isOwner then
-		spawn(function()
-			while bb and bb.Parent do
-				wait(math.random(200, 500) / 100)
-				if not bb or not kzk or not kzk.Parent then break end
-				for _ = 1, math.random(5, 10) do
-					if not kzk or not kzk.Parent then break end
-					kzk.Text = glitchString(displayName)
-					wait(0.04)
-				end
-				if kzk and kzk.Parent then kzk.Text = displayName end
-			end
-		end)
+	local waveCleanup = nil
+
+	if resolvedRankEffect == "typing" then
+		cursorLabel.Visible = true
+		startTypingEffect(kzk, displayName, cursorLabel)
+
+	elseif resolvedRankEffect == "glitch" then
+		startGlitchEffect(kzk, displayName)
+
+	elseif resolvedRankEffect == "wave" then
+		-- Hide the base label; render per-character labels instead
+		kzk.Visible = false
+		cursorLabel.Visible = false
+		waveCleanup = startWaveEffect(
+			bg,
+			displayName,
+			UDim2.new(0, TEXT_OFFSET, 0, 8),
+			Color3.fromRGB(255, 255, 255),
+			Enum.Font.GothamBold
+		)
 	end
 
 	spawn(function()
@@ -319,16 +549,18 @@ local function buildTag(plr)
 	pFrm.ClipsDescendants     = true
 	pFrm.ZIndex               = 1
 	Instance.new("UICorner", pFrm).CornerRadius = TAG_CORNER
-	for _ = 1, 12 do
+	for i = 1, 18 do
 		local dot = Instance.new("Frame")
 		dot.Parent              = pFrm
-		dot.Size                = UDim2.new(0, 2, 0, 2)
-		dot.Position            = UDim2.new(math.random() * 0.9 + 0.05, 0, math.random() * 0.9 + 0.05, 0)
-		dot.BackgroundColor3    = tagColor
-		dot.BackgroundTransparency = math.random(40, 75) / 100
+		local sz                = math.random(1, 3)
+		dot.Size                = UDim2.new(0, sz, 0, sz)
+		dot.Position            = UDim2.new(math.random() * 0.95, 0, math.random() * 0.95, 0)
+		dot.BackgroundColor3    = finalColors[math.random(1, #finalColors)]
+		dot.BackgroundTransparency = math.random(60, 90) / 100
 		dot.ZIndex              = 1
 		Instance.new("UICorner", dot).CornerRadius = UDim.new(1, 0)
 	end
+
 	spawn(function()
 		while bb and bb.Parent do
 			for _, dot in pairs(pFrm:GetChildren()) do
@@ -346,24 +578,88 @@ local function buildTag(plr)
 
 	local tweenCfg = TweenInfo.new(0.3, Enum.EasingStyle.Quad, Enum.EasingDirection.InOut)
 	local isZoomed = false
-	spawn(function()
-		while bb and bb.Parent and hrp and hrp.Parent do
-			local myChar = lp.Character
-			if myChar and myChar:FindFirstChild("HumanoidRootPart") then
-				local dist = (myChar.HumanoidRootPart.Position - hrp.Position).Magnitude
-				if dist > ZOOMOUT_DISTANCE and not isZoomed then
-					isZoomed = true
-					tweenSvc:Create(bb, tweenCfg, {Size = ZOOMOUT_SIZE}):Play()
-					kzk.Visible = false; dname.Visible = false
-					pFrm.Visible = false
-				elseif dist <= ZOOMOUT_DISTANCE and isZoomed then
-					isZoomed = false
-					tweenSvc:Create(bb, tweenCfg, {Size = defaultTagSz}):Play()
-					kzk.Visible = true; dname.Visible = true
-					pFrm.Visible = true
-				end
+
+	local t0 = tick()
+	local connection
+	connection = runSvc.Heartbeat:Connect(function()
+		if not bb or not bb.Parent then
+			connection:Disconnect()
+			if waveCleanup then waveCleanup() end
+			return
+		end
+
+		local t = tick() - t0
+		local colors = getColors()
+
+		if CONFIG.ShimmerEnabled then
+			local sweepPos = (t * 0.45) % 1.7 - 0.35
+			shimmer.Position = UDim2.new(sweepPos - 0.35, 0, 0, 0)
+		end
+
+		if CONFIG.PulseEnabled then
+			local pulse = 0.3 + 0.15 * math.sin(t * 2.2)
+			stroke.Transparency = pulse
+		end
+
+		strokeGrad.Rotation = 0
+		strokeGrad.Color = makeColorSequence(colors)
+
+		if not CONFIG.RainbowRankEnabled or plr ~= lp then
+			kzk.TextColor3 = Color3.fromRGB(255, 255, 255)
+			local c1 = colors[1]:Lerp(Color3.new(1,1,1), 0.3)
+			local c2 = (colors[2] or colors[1]):Lerp(Color3.new(1,1,1), 0.3)
+			kzkGrad.Color    = makeColorSequence({c1, c2})
+			kzkGrad.Rotation = 0
+			local dgr = dname:FindFirstChild("UserGrad")
+			if dgr then dgr.Color = makeColorSequence({c1, c2}) end
+		else
+			kzk.TextColor3 = cyclicLerp(colors, (t * 0.5) % 1)
+			kzkGrad.Color = makeColorSequence({
+				cyclicLerp(colors, (t * 0.5)       % 1),
+				cyclicLerp(colors, (t * 0.5 + 0.5) % 1),
+			})
+			kzkGrad.Rotation = (t * 50) % 360
+		end
+
+		if resolvedRankEffect == "typing" and cursorLabel and cursorLabel.Parent then
+			local approxW = math.min(#kzk.Text * 7, kzk.AbsoluteSize.X)
+			cursorLabel.Position = UDim2.new(0, TEXT_OFFSET + approxW, 0, 8)
+		end
+
+		local floatY = math.sin(t * CONFIG.FloatSpeed) * CONFIG.FloatAmplitude
+		bb.StudsOffset = tagOff + Vector3.new(0, floatY, 0)
+
+		local myChar = lp.Character
+		if myChar and myChar:FindFirstChild("HumanoidRootPart") and hrp and hrp.Parent then
+			local dist = (myChar.HumanoidRootPart.Position - hrp.Position).Magnitude
+			if dist > ZOOMOUT_DISTANCE and not isZoomed then
+				isZoomed = true
+				tweenSvc:Create(bb, tweenCfg, {Size = ZOOMOUT_SIZE}):Play()
+				tweenSvc:Create(logoHolder, tweenCfg, {Position = UDim2.new(0.5, -IMG_W/2, 0.5, -IMG_W/2)}):Play()
+				kzk.Visible         = false
+				dname.Visible       = false
+				cursorLabel.Visible = false
+				pFrm.Visible        = false
+			elseif dist <= ZOOMOUT_DISTANCE and isZoomed then
+				isZoomed = false
+				tweenSvc:Create(bb, tweenCfg, {Size = defaultTagSz}):Play()
+				tweenSvc:Create(logoHolder, tweenCfg, {Position = UDim2.new(0, IMG_PAD, 0.5, -IMG_W/2)}):Play()
+				-- Wave effect: rank label is hidden (per-char labels handle rendering)
+				kzk.Visible         = (resolvedRankEffect ~= "wave")
+				dname.Visible       = true
+				cursorLabel.Visible = (resolvedRankEffect == "typing")
+				pFrm.Visible        = true
 			end
-			wait(0.1)
+		end
+
+		for _, p in pairs(plrs:GetPlayers()) do
+			local c = p.Character
+			local h = c and c:FindFirstChild("Humanoid")
+			if h then
+				h.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+				h.NameDisplayDistance = 0
+				h.HealthDisplayDistance = 0
+			end
 		end
 	end)
 
@@ -382,6 +678,7 @@ local function buildTag(plr)
 				end
 			else
 				bb:Destroy()
+				if waveCleanup then waveCleanup() end
 				cleanup:Disconnect()
 			end
 		end
@@ -396,12 +693,24 @@ end
 
 for _, plr in pairs(plrs:GetPlayers()) do
 	plr.CharacterAdded:Connect(function(char)
+		local hum = char:WaitForChild("Humanoid", 5)
+		if hum then
+			hum.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+			hum.NameDisplayDistance = 0
+			hum.HealthDisplayDistance = 0
+		end
 		char:WaitForChild("Head", 5)
 		rebuildTag(plr)
 	end)
 end
 
 lp.CharacterAdded:Connect(function(char)
+	local hum = char:WaitForChild("Humanoid", 5)
+	if hum then
+		hum.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+		hum.NameDisplayDistance = 0
+		hum.HealthDisplayDistance = 0
+	end
 	char:WaitForChild("Head", 5)
 	for userId, _ in pairs(mutualPlrs) do
 		local plr = plrs:GetPlayerByUserId(userId)
@@ -411,41 +720,40 @@ end)
 
 plrs.PlayerAdded:Connect(function(plr)
 	plr.CharacterAdded:Connect(function(char)
+		local hum = char:WaitForChild("Humanoid", 5)
+		if hum then
+			hum.DisplayDistanceType = Enum.HumanoidDisplayDistanceType.None
+			hum.NameDisplayDistance = 0
+			hum.HealthDisplayDistance = 0
+		end
 		char:WaitForChild("Head", 5)
 		rebuildTag(plr)
 	end)
 end)
 
 local hasInitialized = false
-local hasResponded = {}
+local hasResponded   = {}
 
 local function handleMessage(msg, ch)
 	if not msg or not msg.Text then return end
 	local text = msg.Text
-	local src = msg.TextSource
+	local src  = msg.TextSource
 	if not src then return end
 	local sender = plrs:GetPlayerByUserId(src.UserId)
 	if not sender or sender == lp then return end
 
-	if string.find(text, "\217\136\217\136\217\136") then
-		mutualPlrs[sender.UserId] = true
-
+	if string.find(text, "○") then
 		local replyKey = tostring(sender.UserId)
-		if not hasResponded[replyKey] then
-			hasResponded[replyKey] = true
-			task.wait(0.5)
-			ch:SendAsync("\217\136")
-			task.delay(5, function()
-				hasResponded[replyKey] = nil
-			end)
-		end
-
+		if hasResponded[replyKey] or mutualPlrs[sender.UserId] then return end
+		hasResponded[replyKey] = true
+		task.wait(0.5)
+		ch:SendAsync("●")
+		mutualPlrs[sender.UserId] = true
 		if not taggedPlrs[sender.UserId] then
 			if sender.Character then buildTag(sender)
 			else sender.CharacterAdded:Wait(); wait(0.5); buildTag(sender) end
 		end
-
-	elseif string.find(text, "\217\136") and not string.find(text, "\217\136\217\136\217\136") then
+	elseif string.find(text, "●") then
 		mutualPlrs[sender.UserId] = true
 		if not taggedPlrs[sender.UserId] then
 			if sender.Character then buildTag(sender)
@@ -456,21 +764,13 @@ end
 
 local channels = txtChat:WaitForChild("TextChannels", 5)
 local general  = channels and channels:FindFirstChild("RBXGeneral")
-if channels then
-	for _, ch in pairs(channels:GetChildren()) do
-		if ch:IsA("TextChannel") then
-			ch.MessageReceived:Connect(function(msg) handleMessage(msg, ch) end)
-		end
-	end
-	channels.ChildAdded:Connect(function(ch)
-		if ch:IsA("TextChannel") then
-			ch.MessageReceived:Connect(function(msg) handleMessage(msg, ch) end)
-		end
-	end)
-	if general and not hasInitialized then
+
+if general then
+	general.MessageReceived:Connect(function(msg) handleMessage(msg, general) end)
+	task.wait(3)
+	if not hasInitialized and next(mutualPlrs) == nil then
 		hasInitialized = true
-		task.wait(1)
-		general:SendAsync("\217\136\217\136\217\136")
+		general:SendAsync("○")
 	end
 end
 
@@ -498,3 +798,45 @@ game:BindToClose(function()
 		end
 	end
 end)
+
+return {
+	SetRankText = function(text)
+		CONFIG.RankText = text
+		local pg = lp:FindFirstChild("PlayerGui")
+		if pg then
+			local bb  = pg:FindFirstChild("KiroTag_" .. lp.UserId)
+			local lbl = bb and bb:FindFirstChild("DisplayName", true)
+			if lbl then lbl.Text = text end
+		end
+	end,
+
+	SetDisplayName = function(name)
+		CONFIG.DisplayName = name
+		local pg = lp:FindFirstChild("PlayerGui")
+		if pg then
+			local bb  = pg:FindFirstChild("KiroTag_" .. lp.UserId)
+			local lbl = bb and bb:FindFirstChild("Username", true)
+			if lbl then lbl.Text = name end
+		end
+	end,
+
+	SetTheme = function(themeName)
+		if THEMES[themeName] then
+			CONFIG.Theme = themeName
+			rebuildTag(lp)
+		end
+	end,
+
+	SetRainbow = function(enabled)
+		CONFIG.RainbowRankEnabled = enabled
+	end,
+
+	SetRankEffect = function(effect)
+		CONFIG.RankEffect = effect
+		rebuildTag(lp)
+	end,
+
+	Rebuild = function()
+		rebuildTag(lp)
+	end,
+}
