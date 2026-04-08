@@ -118,13 +118,13 @@ local customPlayers = {
 		logoAsset      = "rbxassetid://139812142649953",		
         rankEffect     = "glitch",
     },
-    [""] = {
-		customName     = "KIRO STAFF",
-		gradientA      = Color3.fromRGB(0,0,0),
-		gradientB      = Color3.fromRGB(0,0,0),
-		logoAsset      = "rbxassetid://138252827537421",		
+	"rainbowdelux0765"] = {
+		customName     = "KIRO ALEAH",
+		gradientA      = Color3.fromRGB(255, 255, 255),
+		gradientB      = Color3.fromRGB(0, 0, 0),
+		logoAsset      = "rbxassetid://74960672416607",		
         rankEffect     = "glitch",
-	}
+    }
 }
 
 local function lerp(a, b, t) return a + (b - a) * t end
