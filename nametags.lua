@@ -64,7 +64,7 @@ local customPlayers = {
 	},
 	["isntkalay"] = {
 		customName     = "Kiro Owner ALT",
-		gradientA      = Color3.fromRGB((255, 128, 139),
+		gradientA      = Color3.fromRGB(255, 128, 139),
 		gradientB      = Color3.fromRGB(255,255,255),
 		logoAsset      = "rbxassetid://88344135795603",
 		rankEffect     = "glitch",
@@ -78,14 +78,14 @@ local customPlayers = {
 	},
 	["g6h2z"] = {
 		customName     = "KIRO STAFF",
-		gradientA      = Color3.fromRGB(255,255,255),
-		gradientB      = Color3.fromRGB(0,0,0),
+		gradientA      = Color3.fromRGB(255, 255, 255),
+		gradientB      = Color3.fromRGB(0, 0, 0),
 		rankEffect     = "glitch",
 	},
 	["Adamalchoum2"] = {
 		customName     = "KIRO STAFF",
 		gradientA      = Color3.fromRGB(255,255,255),
-		gradientB      = Color3.fromRGB(0,0,0),
+		gradientB      = Color3.fromRGB(0 ,0, 0),
 		rankEffect     = "glitch",
 	},
 	["gamergod0007"] = {
