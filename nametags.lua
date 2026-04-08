@@ -104,10 +104,11 @@ local customPlayers = {
 		logoAsset  = "rbxassetid://138252827537421",
 	},
 	["Adamalchoum2"] = {
-		customName = "KIRO NT",
+		customName = "KIRO NT TEAM",
 		gradientA  = Color3.fromRGB(128, 0, 128),
 		gradientB  = Color3.fromRGB(128, 0, 128),
 		rankEffect = "glitch",
+		logoAsset  = "rbxassetid://138252827537421",
 	},
 }
 
