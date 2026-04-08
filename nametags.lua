@@ -40,7 +40,6 @@ local CONFIG = {
 	FloatAmplitude     = 0.08,
 	FloatSpeed         = 1.4,
 
-	-- RankEffect options: "typing" | "glitch" | "wave" | "none"
 	RankEffect         = "typing",
 }
 
@@ -57,7 +56,7 @@ local customPlayers = {
 		rankEffect     = "glitch",
 	},
 	["6vryzx"] = {
-		customName     = "KIRO CO-OWNER",
+		customName     = "CO-OWNER",
 		gradientA      = Color3.fromRGB(0, 0, 255),
 		gradientB      = Color3.fromRGB(0, 0, 0),
 		logoAsset      = "rbxassetid://131090669162422",
@@ -65,9 +64,9 @@ local customPlayers = {
 	},
 	["isntkalay"] = {
 		customName     = "Kiro Owner ALT",
-		gradientA      = Color3.fromRGB(255, 0, 0),
-		gradientB      = Color3.fromRGB(0, 0, 0),
-		logoAsset      = "rbxassetid://102073235023063",
+		gradientA      = Color3.fromRGB((255, 128, 139),
+		gradientB      = Color3.fromRGB(255,255,255),
+		logoAsset      = "rbxassetid://88344135795603",
 		rankEffect     = "glitch",
 	},
 	["forrandomsthings"] = {
@@ -79,20 +78,20 @@ local customPlayers = {
 	},
 	["g6h2z"] = {
 		customName     = "KIRO STAFF",
-		gradientA      = Color3.fromRGB(128, 0, 128),
-		gradientB      = Color3.fromRGB(60, 0, 80),
+		gradientA      = Color3.fromRGB(255,255,255),
+		gradientB      = Color3.fromRGB(0,0,0),
 		rankEffect     = "glitch",
 	},
 	["Adamalchoum2"] = {
 		customName     = "KIRO STAFF",
-		gradientA      = Color3.fromRGB(128, 0, 128),
-		gradientB      = Color3.fromRGB(60, 0, 80),
+		gradientA      = Color3.fromRGB(255,255,255),
+		gradientB      = Color3.fromRGB(0,0,0),
 		rankEffect     = "glitch",
 	},
 	["gamergod0007"] = {
 		customName     = "KIRO STAFF",
-		gradientA      = Color3.fromRGB(128, 0, 128),
-		gradientB      = Color3.fromRGB(60, 0, 80),
+		gradientA      = Color3.fromRGB(255,255,255),
+		gradientB      = Color3.fromRGB(0,0,0),
 		rankEffect     = "glitch",
 	}
 }
