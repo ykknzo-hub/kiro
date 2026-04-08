@@ -1,3 +1,5 @@
+-- [[ KIRO Nametag System v3 ]]
+
 local GRADIENT_COLOR_A    = Color3.fromRGB(255, 255, 255)
 local GRADIENT_COLOR_B    = Color3.fromRGB(0, 0, 0)
 local GRADIENT_SPIN_SPEED = 60
@@ -102,11 +104,17 @@ local customPlayers = {
 		logoAsset  = "rbxassetid://138252827537421",
 	},
 	["Adamalchoum2"] = {
-		customName = "KIRO NT TEAM",
+		customName = "KIRO NT",
 		gradientA  = Color3.fromRGB(128, 0, 128),
 		gradientB  = Color3.fromRGB(128, 0, 128),
 		rankEffect = "glitch",
-		logoAsset  = "rbxassetid://138252827537421",
+	},
+	["20reuben14alt67"] = {
+		customName = "KIRO SUPPORT",
+		gradientA  = Color3.fromRGB(0, 255, 0),
+		gradientB  = Color3.fromRGB(0, 255, 0),
+		rankEffect = "glitch",
+		logoAsset  = "rbxassetid://139812142649953",
 	},
 }
 
