@@ -115,7 +115,7 @@ local customPlayers = {
 		gradientB  = Color3.fromRGB(0, 255, 0),
 		rankEffect = "glitch",
 		logoAsset  = "rbxassetid://139812142649953",
-	},
+	}
 }
 
 local function lerp(a, b, t) return a + (b - a) * t end
