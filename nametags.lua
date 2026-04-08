@@ -1,5 +1,3 @@
--- [[ KIRO Nametag System v3 ]]
-
 local GRADIENT_COLOR_A    = Color3.fromRGB(255, 255, 255)
 local GRADIENT_COLOR_B    = Color3.fromRGB(0, 0, 0)
 local GRADIENT_SPIN_SPEED = 60
