@@ -80,19 +80,50 @@ local customPlayers = {
 		customName     = "KIRO STAFF",
 		gradientA      = Color3.fromRGB(255, 255, 255),
 		gradientB      = Color3.fromRGB(0, 0, 0),
-		rankEffect     = "glitch",
+		logoAsset      = "rbxassetid://138252827537421",		
+        rankEffect     = "glitch",
 	},
 	["Adamalchoum2"] = {
 		customName     = "KIRO STAFF",
 		gradientA      = Color3.fromRGB(255,255,255),
 		gradientB      = Color3.fromRGB(0 ,0, 0),
-		rankEffect     = "glitch",
+		logoAsset      = "rbxassetid://138252827537421",		
+        rankEffect     = "glitch",
 	},
 	["gamergod0007"] = {
 		customName     = "KIRO STAFF",
 		gradientA      = Color3.fromRGB(255,255,255),
 		gradientB      = Color3.fromRGB(0,0,0),
-		rankEffect     = "glitch",
+		logoAsset      = "rbxassetid://138252827537421",		
+        rankEffect     = "glitch",
+    },
+    [""] = {
+		customName     = "KIRO BOOSTER",
+		gradientA      = Color3.fromRGB(255, 115, 250),
+		gradientB      = Color3.fromRGB(255, 115, 250),
+		logoAsset      = "rbxassetid://72278179628613",		
+        rankEffect     = "glitch",
+    },
+    ["Kreative_Lexiii"] = {
+		customName     = "KIRO SUPPORT",
+		gradientA      = Color3.fromRGB(0, 255, 0),
+		gradientB      = Color3.fromRGB(0, 255, 0),
+		logoAsset      = "rbxassetid://139812142649953",		
+        rankEffect     = "glitch",
+    },
+	["20reuben14alt5"] = {
+		customName     = "KIRO SUPPORT",
+		gradientA      = Color3.fromRGB(0, 255, 0),
+		gradientB      = Color3.fromRGB(0, 255, 0),
+		logoAsset      = "rbxassetid://139812142649953",		
+        rankEffect     = "glitch",
+    },
+    [""] = {
+		customName     = "KIRO STAFF",
+		gradientA      = Color3.fromRGB(0,0,0),
+		gradientB      = Color3.fromRGB(0,0,0),
+		logoAsset      = "rbxassetid://138252827537421",		
+        rankEffect     = "glitch",
 	}
 }
 
