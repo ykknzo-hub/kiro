@@ -118,7 +118,7 @@ local customPlayers = {
 		logoAsset      = "rbxassetid://139812142649953",		
         rankEffect     = "glitch",
     },
-	"rainbowdelux0765"] = {
+	["rainbowdelux0765"] = {
 		customName     = "KIRO ALEAH",
 		gradientA      = Color3.fromRGB(255, 255, 255),
 		gradientB      = Color3.fromRGB(0, 0, 0),
