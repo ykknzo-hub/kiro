@@ -68,13 +68,6 @@ local customPlayers = {
 		rankEffect = "glitch",
 		logoAsset  = "rbxassetid://138252827537421",
 	},
-	["Adamalchoum2"] = {
-		customName = "KIRO STAFF",
-		gradientA  = Color3.fromRGB(255, 255, 255),
-		gradientB  = Color3.fromRGB(0, 0, 0),
-		rankEffect = "glitch",
-		logoAsset  = "rbxassetid://138252827537421",
-	},
 	["gamergod0007"] = {
 		customName = "KIRO STAFF",
 		gradientA  = Color3.fromRGB(255, 255, 255),
