@@ -41,7 +41,7 @@ local customPlayers = {
 		logoAsset  = "rbxassetid://88344135795603",
 	},
 	["6vryzx"] = {
-		customName = "IM THE REAL OWNER",
+		customName = "CO-OWNER",
 		gradientA  = Color3.fromRGB(0, 0, 255),
 		gradientB  = Color3.fromRGB(0, 0, 0),
 		rankEffect = "glitch",
